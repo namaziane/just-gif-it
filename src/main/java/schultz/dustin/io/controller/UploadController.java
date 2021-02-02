@@ -1,5 +1,8 @@
 package schultz.dustin.io.controller;
 
+import com.justgifit.services.ConverterService;
+import com.justgifit.services.GifEncoderService;
+import com.justgifit.services.VideoDecoderService;
 import com.madgag.gif.fmsware.AnimatedGifEncoder;
 import org.bytedeco.javacv.FFmpegFrameGrabber;
 import org.bytedeco.javacv.FrameGrabber;
@@ -9,9 +12,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import schultz.dustin.io.services.ConverterService;
-import schultz.dustin.io.services.GifEncoderService;
-import schultz.dustin.io.services.VideoDecoderService;
 
 import javax.inject.Inject;
 import java.io.File;
@@ -25,7 +25,6 @@ public class UploadController {
 
     private final static Logger log = LoggerFactory.getLogger(MethodHandles.lookup()
             .lookupClass());
-
     @Value("${multipart.location}")
     private String location;
 
@@ -38,15 +37,15 @@ public class UploadController {
     @Inject
     private VideoDecoderService videoDecoderService;
 
-    @RequestMapping(value = "/upload", method = RequestMethod.POST, produces = 
-            MediaType.IMAGE_GIF_VALUE)
+    @RequestMapping(value = "/upload", method = RequestMethod.POST, produces = MediaType.IMAGE_GIF_VALUE)
     public String upload(@RequestPart("file") MultipartFile file,
                          @RequestParam("start") int start,
                          @RequestParam("end") int end,
                          @RequestParam("speed") int speed,
                          @RequestParam("repeat") boolean repeat) throws IOException, FrameGrabber.Exception {
-        File videoFile = new File(location + "/" + System
-                .currentTimeMillis() + ".mp4");
+
+        File videoFile = new File(location + "/" + System.currentTimeMillis() + ".mp4");
+
         file.transferTo(videoFile);
 
         log.info("Saved video file to {}", videoFile.getAbsolutePath());
@@ -63,3 +62,4 @@ public class UploadController {
         return output.getFileName().toString();
     }
 }
+

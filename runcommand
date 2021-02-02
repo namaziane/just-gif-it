@@ -1,0 +1,1 @@
+java -jar target/just-gif-it-1.0-SNAPSHOT.jar > run_$1
