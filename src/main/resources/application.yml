@@ -23,6 +23,6 @@ debug: true
 com:
   justgifit:
     optimize: true
-    git-location: ${java.io.tmpdir}/git
+    gifLocation: ${java.io.tmpdir}/git
     optimize-level-2: true
 
